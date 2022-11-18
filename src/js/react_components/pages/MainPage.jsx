@@ -1,13 +1,16 @@
-import BackgroundMovie from './../ui/BackgroundMovie';
 import { useEffect, useState } from 'react';
+import BackgroundMovie from './../ui/BackgroundMovie';
+import InputMain from './../ui/inputs/InputMain';
 
 function MainPage() {
-  const [ar, setAR] = useState(0);
+  const [aspectRatio, setAspectRatio] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
   useEffect(() => {
     function updateSize() {
       const width = document.documentElement.clientWidth;
       const height = document.documentElement.clientHeight;
-      setAR(width > 1023 ? (width / height) : 0);
+      setAspectRatio(width > 1023 ? (width / height) : 0);
       // if (width > 1023) setAR(width / height);
     }
 
@@ -18,11 +21,17 @@ function MainPage() {
 
   return (
     <>
-      {ar > 1.6 ? <BackgroundMovie /> : null}
+      {aspectRatio > 1.6
+        ? <BackgroundMovie />
+        : <div className='backgroundMainImage'></div>
+      }
       <div className='mainWrap'>
-        <main className='container main'>
+        <main className={`container main ${isActive ? 'active' : null}`}>
           <h1>Unlimited movies,<br />TV shows, and more.</h1>
-          <p>Watch anywhere. Cancel anytime.</p>
+          <p className={isActive ? 'active' : null}>Watch anywhere. Cancel anytime.</p>
+          <div className='main__searchArea'>
+            <InputMain changeActive={setIsActive} />
+          </div>
         </main>
       </div>
     </>

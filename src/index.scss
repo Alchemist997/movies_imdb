@@ -26,4 +26,18 @@ body {
   margin: 0 auto;
 }
 
+button {
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  place-items: center;
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+}
+
 @import './js/react_components/pages/MainPage';
+@import './js/react_components/ui/inputs/InputMain';
