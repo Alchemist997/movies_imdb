@@ -1,0 +1,13 @@
+$background-main: #050505;
+$text-main: #fefefe;
+$accent: #3e93e2;
+$card-color: #151515;
+
+$transition_mainPage: 0.5s;
+$transition_btnMain: 0.4s;
+
+%flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

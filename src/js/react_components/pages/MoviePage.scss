@@ -1,0 +1,156 @@
+.header {
+  &--moviePage {
+    background-color: $background-main;
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 80px;
+    }
+  }
+
+  &__logo {
+    font-size: 24px;
+    font-weight: 700;
+    text-shadow: 2px 2px transparent;
+    transition: 0.2s;
+
+    &:hover {
+      text-shadow: 1px 1px #fac539;
+    }
+  }
+}
+
+.movie-preview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: calc(100vh - 80px);
+  max-height: 120vh;
+
+  .container {
+    align-self: stretch;
+    display: flex;
+  }
+
+  &__images-wrap,
+  &__img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  &__images-wrap {
+    z-index: -1;
+  }
+
+  &__img {
+    z-index: -3;
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+
+    &:last-of-type {
+      // opacity: 0;
+    }
+  }
+
+  &__gradient {
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, #111 19%, rgba(#111, 0) 100%);
+  }
+
+  &__title {
+    margin-top: 0;
+    margin-bottom: 0.42em;
+    font-size: 72px;
+    font-weight: 900;
+  }
+
+  &__info,
+  &__info-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  &__info {
+    max-width: 70%;
+    justify-content: space-evenly;
+
+    .imdb-rate {
+      margin-right: 24px;
+    }
+
+    .movie-info-description {
+      font-weight: 600;
+      flex-wrap: nowrap;
+
+      p + p {
+        border-width: 2px;
+        padding-left: 24px;
+        margin-left: 24px;
+      }
+    }
+  }
+
+  &__info-top {
+    font-size: 24px;
+  }
+
+  &__info-bottom {
+    max-width: 55%;
+    font-weight: 600;
+  }
+
+  &__btn {
+    background-color: transparent;
+    padding: 22px 70px;
+    border-radius: 40px;
+    border: 2px solid $text-main;
+    font-size: inherit;
+    font-weight: inherit;
+
+    &:not(:last-child) {
+      margin-bottom: 50px;
+    }
+  }
+}
+
+.movie-info {
+  background-color: $text-main;
+  color: #323232;
+  padding-top: 60px;
+  padding-bottom: 50px;
+
+  &__description {
+    max-width: 70%;
+    &:not(:last-child) {
+      margin-bottom: 60px;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 36px;
+    font-weight: 900;
+
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.footer {
+  @extend %flex-center;
+  font-weight: 900;
+  padding: 40px 0;
+}

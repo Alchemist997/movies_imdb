@@ -1,27 +1,20 @@
-import { useState } from 'react';
+import SVG from '../svg/SVGList';
 
-function InputMain({ changeActive }) {
-  const [inputValue, setinputValue] = useState('');
-
+function InputMain({ handler, value, isLoading }) {
   return (
-    <form className='inputMain-wrap'
-      method="POST"
-      onSubmit={e => {
-        e.preventDefault();
-        console.log('a');
-      }}
-    >
+    <div className='inputMain-wrap'>
       <input className='inputMain'
         placeholder='Type here...'
         type='text'
-        value={inputValue}
-        onChange={e => {
-          setinputValue(e.target.value);
-          changeActive(Boolean(e.target.value));
-        }}
+        value={value}
+        maxLength='128'
+        onChange={evt => { handler(evt.target.value); }}
       />
-      <button className='inputMain-submitBtn' type='submit'>Search</button>
-    </form>
+      <button className={`inputMain-submitBtn ${isLoading ? 'hide' : ''}`} type='submit'>
+        <SVG name='loader_1' />
+        Search
+      </button>
+    </div>
   );
 }
 

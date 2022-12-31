@@ -2,16 +2,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
 
+@import './variables.scss';
+
 html,
 body {
   font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  line-height: 1.2;
   margin: 0;
   padding: 0;
-  color: #fefefe;
+  color: $text-main;
 }
 
 body {
-  background-color: #050505;
+  background-color: $background-main;
 }
 
 *,
@@ -22,8 +26,11 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1240px;
   margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 button {
@@ -31,6 +38,11 @@ button {
   color: inherit;
   display: flex;
   place-items: center;
+
+  svg {
+    max-height: 100%;
+    max-width: 100%;
+  }
 }
 
 input,
@@ -39,5 +51,44 @@ button {
   outline: none;
 }
 
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+}
+
+p {
+  margin: 0;
+}
+
 @import './js/react_components/pages/MainPage';
+@import './js/react_components/pages/MoviePage';
 @import './js/react_components/ui/inputs/InputMain';
+@import './js/react_components/ui/cards/Card';
+
+.imdb-rate {
+  background-color: #fac539;
+  border-radius: 8px;
+  padding: 7px 12px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #000;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.movie-info-description {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
+  p + p {
+    border-left: 1px solid $text-main;
+    padding-left: 10px;
+    margin-left: 10px;
+  }
+}

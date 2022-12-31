@@ -1,5 +1,3 @@
-$transition_mainPage: 0.5s;
-
 .main {
   &Wrap {
     margin: 0 auto;
@@ -34,10 +32,9 @@ $transition_mainPage: 0.5s;
   }
 
   &__searchArea {
-    font-size: 1.125rem;
     margin: 0 auto;
     margin-bottom: 2.5vw;
-    max-width: 555px;
+    max-width: 650px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -93,4 +90,11 @@ $transition_mainPage: 0.5s;
     background-size: cover;
     background-repeat: no-repeat;
   }
+}
+
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
 }

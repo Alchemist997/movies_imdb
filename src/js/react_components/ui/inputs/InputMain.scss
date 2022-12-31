@@ -7,13 +7,15 @@
     height: 3.125rem;
   }
 
+  background-color: $text-main;
   width: 100%;
   font-size: inherit;
   border-radius: 30px 0 0 30px;
   padding-left: 28px;
 
   &-submitBtn {
-    background-color: #4ea7f9;
+    position: relative;
+    background-color: $accent;
     font-size: inherit;
     font-weight: 700;
     flex-basis: 120px;
@@ -21,14 +23,30 @@
     align-items: center;
     justify-content: center;
     border-radius: 0px 30px 30px 0px;
-    transition: 0.1s;
+    transition: background-color 0.2s, color $transition_btnMain, transform 0.1s;
 
     &:hover {
-      background-color: darken(#4ea7f9, 30);
+      background-color: darken($accent, 25);
     }
 
     &:active {
-      transform: scale(0.92);
+      transform: scale(0.95);
+    }
+
+    &.hide {
+      color: transparent;
+
+      svg {
+        opacity: 1;
+      }
+    }
+
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity $transition_btnMain;
     }
   }
 }

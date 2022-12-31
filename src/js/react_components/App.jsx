@@ -8,7 +8,7 @@ function App() {
       <Routes>
         <Route path='/' element={<MainPage />} />
         <Route path='*' element={<h1>Error 404 — Page not found</h1>} />
-        <Route path='movie/:name' element={<MoviePage />} />
+        <Route path='movie/:movieID' element={<MoviePage />} />
       </Routes>
     </BrowserRouter>
   );
