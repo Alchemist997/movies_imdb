@@ -10,7 +10,11 @@ function InputMain({ handler, value, isLoading }) {
         maxLength='128'
         onChange={evt => { handler(evt.target.value); }}
       />
-      <button className={`inputMain-submitBtn ${isLoading ? 'hide' : ''}`} type='submit'>
+      <button
+        className={`inputMain-submitBtn ${isLoading ? 'hide' : ''}`}
+        type='submit'
+        disabled={isLoading ? true : false}
+      >
         <SVG name='loader_1' />
         Search
       </button>

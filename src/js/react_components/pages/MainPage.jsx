@@ -27,9 +27,10 @@ function MainPage() {
     axios.get(url)
       .then(response => {
         const results = response.data?.results;
+        const errorMessage = response.data?.errorMessage;
 
-        if (!results) {
-          throw new Error(response.data?.errorMessage || 'Unknown Error');
+        if (!results || errorMessage) {
+          throw new Error(errorMessage || 'Unknown Error');
         } else {
           setStartNumber(startNumber + loadMoreItemsQty);
           setResultsQty(results.length);
@@ -83,7 +84,7 @@ function MainPage() {
           method="POST"
           onSubmit={evt => {
             evt.preventDefault();
-            if (cahchedRequestValue === inputValue) return;
+            if (isLoading || cahchedRequestValue === inputValue) return;
             setCahchedRequestValue(inputValue);
             getIMDbData(inputValue);
           }}
@@ -115,6 +116,7 @@ function MainPage() {
                       type='button'
                       className={`card card--loadMore ${isLoading ? 'hide' : ''}`}
                       onClick={() => {
+                        if (isLoading) return;
                         makeRequest(searchUrl({
                           requestString,
                           loadMoreItemsQty,

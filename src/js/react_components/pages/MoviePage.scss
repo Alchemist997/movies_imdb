@@ -36,7 +36,8 @@
   }
 
   &__images-wrap,
-  &__img {
+  &__img,
+  .backgroundMovieImage {
     position: absolute;
     left: 0;
     right: 0;
@@ -46,6 +47,16 @@
 
   &__images-wrap {
     z-index: -1;
+    overflow: hidden;
+
+    &.hidden img {
+      opacity: 0;
+    }
+
+    .backgroundCSSImage {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__img {
@@ -53,9 +64,12 @@
     width: 100%;
     max-height: 100%;
     object-fit: cover;
+    object-position: center;
+    transition: opacity 3s;
+    opacity: 0;
 
-    &:last-of-type {
-      // opacity: 0;
+    &.isShowed {
+      opacity: 1;
     }
   }
 
@@ -153,4 +167,17 @@
   @extend %flex-center;
   font-weight: 900;
   padding: 40px 0;
+}
+
+@media (min-aspect-ratio: 3/2) {
+  .movie-preview {
+    &__images-wrap.once img {
+      max-height: 120vh;
+      object-fit: contain;
+    }
+
+    &__img {
+      max-height: 150vh;
+    }
+  }
 }
