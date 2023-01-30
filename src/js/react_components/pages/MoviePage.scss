@@ -20,6 +20,56 @@
       text-shadow: 1px 1px #fac539;
     }
   }
+
+  &__searchArea {
+    position: relative;
+
+    &.active {
+      .cards-list--movie {
+        max-height: 80vh;
+        padding: 10px;
+
+        // Почему выше не написано просто .cards-list--movie:not(:empty) ?
+        // Потому что в Firefox это, как ни странно, не работало так, как должно.
+
+        &:empty {
+          max-height: 0;
+          padding: 0;
+        }
+      }
+    }
+
+    .cards-list--movie {
+      position: absolute;
+      z-index: 997;
+      overflow-y: auto;
+      top: calc(2.77rem + 20px);
+      left: 0;
+      right: 0;
+      background-color: rgba($card-color, 0.5);
+      border-radius: 10px;
+      max-height: 0;
+      padding: 0;
+      padding-bottom: 0;
+      transition: max-height 0.5s, padding 0.5s;
+
+      .card {
+        margin-bottom: 10px;
+        padding: 10px;
+        font-size: 14px;
+
+        .card__info-top {
+          p {
+            font-size: 16px;
+          }
+        }
+
+        &--loadMore {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
 }
 
 .movie-preview {

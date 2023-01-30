@@ -1,20 +1,29 @@
 import axios from 'axios';
 import urlGenerator from './../../utils/urlGenerator';
 import InputHeader from './../ui/inputs/InputHeader';
-import { useState, useEffect } from 'react';
+import CardsList from './../ui/lists/CardsList';
+import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import { debounce } from './../../utils/debounce';
 
 function MoviePage() {
   const { movieID } = useParams();
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [inputIsAtive, setInputIsAtive] = useState(false);
+  const [data, setData] = useState(null);
+  const [requestString, setRequestString] = useState('');
+  const [responseErrorInfo, setResponseErrorInfo] = useState('');
   const [pageData, setPageData] = useState(null);
   const [images, setImages] = useState(null);
   const [suitableImages, setSuitableImages] = useState(new Set());
   const [showedImage, setShowedImage] = useState(-1);
 
-  function request(url) {
+  const loadMoreItemsQty = 7;
+  const searchUrl = urlGenerator('AdvancedSearch');
+
+  function onLoadPageRequest(url) {
     axios.get(url)
       .then(response => {
         const responseData = response?.data;
@@ -33,10 +42,73 @@ function MoviePage() {
       });
   }
 
+  function inputRequest(url) {
+    if (isLoading) return;
+
+    setIsLoading(true);
+    axios.get(url)
+      .then(response => {
+        const results = response.data?.results;
+        const errorMessage = response.data?.errorMessage;
+
+        if (!results || errorMessage) {
+          throw new Error(errorMessage || 'Unknown Error');
+        } else {
+          setData(results);
+        }
+      })
+      .catch(error => {
+        setData('error');
+        setRequestString(null);
+        setResponseErrorInfo({
+          message: error.message,
+          statusCode: error.response?.status,
+          statusText: error.response?.statusText
+        });
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setInputIsAtive(true);
+      });
+  }
+
+  const debounceInputHandler = useCallback(debounce(value => {
+    if (!value || value === requestString || isLoading) return;
+    setRequestString(value);
+    inputRequest(searchUrl({ requestString: value, loadMoreItemsQty }));
+  }, 1000), [requestString, isLoading]);
+
+  function inputOnChangeHandler(val) {
+    setInputValue(val);
+    debounceInputHandler(val);
+  }
+
   useEffect(() => {
     const onLoadPage = urlGenerator('Title');
-    request(onLoadPage({ movieID }));
+    onLoadPageRequest(onLoadPage({ movieID }));
   }, [movieID]);
+
+  useEffect(() => {
+    const input = document.querySelector('.inputHeader');
+
+    function inputHandler() {
+      setInputIsAtive(true);
+    }
+
+    function searchAreaHandler(evt) {
+      const target = evt.target;
+      if (target.closest('.header__searchArea') && !target.closest('.card')) return;
+      setInputIsAtive(false);
+    }
+
+    input.addEventListener('focus', inputHandler);
+    document.addEventListener('pointerdown', searchAreaHandler);
+    return () => {
+      input.removeEventListener('focus', inputHandler);
+      document.removeEventListener('pointerdown', searchAreaHandler);
+    };
+  });
 
   useEffect(() => {
     if (!images || !images.length) return;
@@ -81,11 +153,24 @@ function MoviePage() {
           <Link to='/' className='header__logo'>
             Magic Shows
           </Link>
-          <InputHeader
-            handler={setInputValue}
-            value={inputValue}
-            isLoading={isLoading}
-          />
+
+          <div className={`header__searchArea ${inputIsAtive ? 'active' : ''}`}>
+            <InputHeader
+              handler={inputOnChangeHandler}
+              value={inputValue}
+              isLoading={isLoading}
+            />
+
+            <CardsList
+              data={data}
+              isLoading={isLoading}
+              resultsQty={data?.length}
+              loadMoreItemsQty={loadMoreItemsQty}
+              responseErrorInfo={responseErrorInfo}
+              isHeaderMode={true}
+            />
+          </div>
+
         </div>
       </header>
 

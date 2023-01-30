@@ -2,11 +2,9 @@ import axios from 'axios';
 import urlGenerator from './../../utils/urlGenerator';
 import { useCallback, useEffect, useState } from 'react';
 import { throttleOnce } from '../../utils/debounce';
-import Card from '../ui/cards/Card';
-import CardError from '../ui/cards/CardError';
 import BackgroundMovie from './../ui/BackgroundMovie';
 import InputMain from './../ui/inputs/InputMain';
-import SVG from './../ui/svg/SVGList';
+import CardsList from './../ui/lists/CardsList';
 
 function MainPage() {
   const [aspectRatio, setAspectRatio] = useState(0);
@@ -46,7 +44,6 @@ function MainPage() {
           statusText: error.response?.statusText
         });
         console.log(error);
-        // alert('Ошибка');
       })
       .finally(() => {
         setIsLoading(false);
@@ -97,51 +94,19 @@ function MainPage() {
               value={inputValue}
               isLoading={isLoading}
             />
-            <section className='cards-list cards-list--main'>
-              {data && data.length && data !== 'error'
-                ? <>
-                  {data.map(el => <Card
-                    key={el.id}
-                    movieID={el.id}
-                    title={el.title}
-                    rate={el.imDbRating}
-                    imgSrc={el.image}
-                    genresList={el.genreList}
-                    years={el.description}
-                    plot={el.plot}
-                  />)}
 
-                  {resultsQty >= loadMoreItemsQty &&
-                    <button
-                      type='button'
-                      className={`card card--loadMore ${isLoading ? 'hide' : ''}`}
-                      onClick={() => {
-                        if (isLoading) return;
-                        makeRequest(searchUrl({
-                          requestString,
-                          loadMoreItemsQty,
-                          startNumber
-                        }));
-                      }}
-                    >
-                      <SVG name='loader_1' />
-                      Load more
-                    </button>}
-                </>
-
-                : data && data !== 'error'
-                  ? <div className='card card--empty'>No results</div>
-
-                  : data && data === 'error'
-                    ? <CardError
-                      message={responseErrorInfo.message}
-                      statusCode={responseErrorInfo.statusCode}
-                      statusText={responseErrorInfo.statusText}
-                    />
-
-                    : null
-              }
-            </section>
+            <CardsList
+              data={data}
+              isLoading={isLoading}
+              makeRequest={() => makeRequest(searchUrl({
+                requestString,
+                loadMoreItemsQty,
+                startNumber
+              }))}
+              resultsQty={resultsQty}
+              loadMoreItemsQty={loadMoreItemsQty}
+              responseErrorInfo={responseErrorInfo}
+            />
           </div>
         </form>
       </div>
