@@ -185,6 +185,26 @@
     border: 2px solid $text-main;
     font-size: inherit;
     font-weight: inherit;
+    transition: 0.2s;
+    position: relative;
+
+    &:hover {
+      background-color: $accent;
+      border-color: $accent;
+    }
+
+    &:active {
+      background-color: darken($accent, 25);
+      border-color: darken($accent, 25);
+    }
+
+    &:focus::after {
+      content: 'Видео не включится, это тестовый сайт';
+      position: absolute;
+      left: 0;
+      top: 110%;
+      font-size: 15px;
+    }
 
     &:not(:last-child) {
       margin-bottom: 50px;
