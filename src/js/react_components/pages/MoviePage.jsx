@@ -6,19 +6,21 @@ import { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { debounce } from './../../utils/debounce';
+import SlickSlider from './../ui/slick_slider/SlickSlider';
 
 function MoviePage() {
   const { movieID } = useParams();
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [inputIsAtive, setInputIsAtive] = useState(false);
-  const [data, setData] = useState(null);
+  const [cardsListData, setCardsListData] = useState(null);
   const [requestString, setRequestString] = useState('');
   const [responseErrorInfo, setResponseErrorInfo] = useState('');
   const [pageData, setPageData] = useState(null);
   const [images, setImages] = useState(null);
   const [suitableImages, setSuitableImages] = useState(new Set());
   const [showedImage, setShowedImage] = useState(-1);
+  const [similarsData, setSimilarsData] = useState(null);
 
   const loadMoreItemsQty = 7;
   const searchUrl = urlGenerator('AdvancedSearch');
@@ -29,10 +31,12 @@ function MoviePage() {
         const responseData = response?.data;
         const imagesList = responseData?.images?.items;
         setImages(imagesList);
-        if (imagesList.length === 1) {
+        if (imagesList?.length === 1) {
           setSuitableImages(prev => prev.add(imagesList[0].image));
         }
+        setSimilarsData(responseData.similars);
         responseData.images = null;
+        responseData.similars = null;
         setPageData(responseData);
       })
       .catch(error => {
@@ -54,11 +58,11 @@ function MoviePage() {
         if (!results || errorMessage) {
           throw new Error(errorMessage || 'Unknown Error');
         } else {
-          setData(results);
+          setCardsListData(results);
         }
       })
       .catch(error => {
-        setData('error');
+        setCardsListData('error');
         setRequestString(null);
         setResponseErrorInfo({
           message: error.message,
@@ -85,6 +89,9 @@ function MoviePage() {
   }
 
   useEffect(() => {
+    setSuitableImages(new Set());
+    setSimilarsData(null);
+    setPageData(null);
     const onLoadPage = urlGenerator('Title');
     onLoadPageRequest(onLoadPage({ movieID }));
   }, [movieID]);
@@ -162,9 +169,9 @@ function MoviePage() {
             />
 
             <CardsList
-              data={data}
+              data={cardsListData}
               isLoading={isLoading}
-              resultsQty={data?.length}
+              resultsQty={cardsListData?.length}
               loadMoreItemsQty={loadMoreItemsQty}
               responseErrorInfo={responseErrorInfo}
               isHeaderMode={true}
@@ -208,7 +215,9 @@ function MoviePage() {
             <div className='movie-preview__info'>
 
               <div className='movie-preview__info-top'>
-                <h1 className='movie-preview__title'>{pageData.title}</h1>
+                <h1 className={`movie-preview__title ${pageData.title.length > 60 ? 'long' : ''}`}>
+                  {pageData.title}
+                </h1>
 
                 <div className='movie-info-description'>
                   <div className='imdb-rate'>IMDb {pageData.imDbRating || '—'}</div>
@@ -236,6 +245,14 @@ function MoviePage() {
               <h2>Watch {pageData.title} on Magic Shows</h2>
               <p>{pageData.plot}</p>
             </div>
+
+            {similarsData?.length ?
+              <div className='movie-info__similars'>
+                <p className='movie-info__similars-heading'>You may also like</p>
+                <SlickSlider list={similarsData} className='movie-info__slider' />
+              </div>
+              : null
+            }
           </div>
         </section>
       }

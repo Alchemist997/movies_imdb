@@ -135,6 +135,10 @@
     margin-bottom: 0.42em;
     font-size: 72px;
     font-weight: 900;
+
+    &.long {
+      font-size: 52px;
+    }
   }
 
   &__info,
@@ -192,7 +196,7 @@
   background-color: $text-main;
   color: #323232;
   padding-top: 60px;
-  padding-bottom: 50px;
+  padding-bottom: 60px;
 
   &__description {
     max-width: 70%;
@@ -209,6 +213,38 @@
 
     &:not(:last-child) {
       margin-bottom: 30px;
+    }
+  }
+
+  &__similars {
+    &-heading {
+      font-weight: 900;
+      font-size: 1.333rem;
+      margin-bottom: 30px;
+    }
+  }
+
+  &__slider {
+    margin: 0 -15px;
+
+    .slick-track {
+      display: flex;
+      align-items: stretch;
+
+      .slick-slide {
+        height: auto;
+        display: flex;
+        align-items: stretch;
+        margin: 0 15px;
+
+        .card {
+          height: 100%;
+        }
+
+        & > div {
+          width: 100%;
+        }
+      }
     }
   }
 }

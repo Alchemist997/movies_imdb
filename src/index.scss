@@ -4,6 +4,9 @@
 
 @import './variables.scss';
 
+@import '~slick-carousel/slick/slick.css';
+@import '~slick-carousel/slick/slick-theme.css';
+
 html,
 body {
   font-family: 'Montserrat', sans-serif;
@@ -67,6 +70,7 @@ p {
 @import './js/react_components/ui/inputs/InputMain';
 @import './js/react_components/ui/inputs/InputHeader';
 @import './js/react_components/ui/cards/Card';
+@import './js/react_components/ui/cards/CardSlick';
 
 .imdb-rate {
   background-color: #fac539;
