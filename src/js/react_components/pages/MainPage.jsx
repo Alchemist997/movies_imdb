@@ -32,7 +32,7 @@ function MainPage() {
         } else {
           setStartNumber(startNumber + loadMoreItemsQty);
           setResultsQty(results.length);
-          setData(data?.length && results.length ? [...data, ...results] : results);
+          setData(data?.length && results.length ? [...data, ...results] : data?.length ? data : results);
         }
       })
       .catch(error => {

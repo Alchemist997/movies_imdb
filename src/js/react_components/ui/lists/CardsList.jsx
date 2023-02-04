@@ -7,16 +7,20 @@ function CardsList({ data, isLoading, makeRequest, resultsQty, loadMoreItemsQty,
     <section className={`cards-list cards-list${isHeaderMode ? '--movie' : '--main'}`}>
       {data && data.length && data !== 'error'
         ? <>
-          {data.map(el => <Card
-            key={el.id}
-            movieID={el.id}
-            title={el.title}
-            rate={el.imDbRating}
-            imgSrc={el.image}
-            genresList={el.genreList}
-            years={el.description}
-            plot={isHeaderMode ? null : el.plot}
-          />)}
+          {data.map(el => el.description ?
+            <Card
+              key={el.id}
+              movieID={el.id}
+              title={el.title}
+              rate={el.imDbRating}
+              imgSrc={el.image}
+              genresList={el.genreList}
+              years={el.description}
+              plot={isHeaderMode ? null : el.plot}
+            />
+
+            : null
+          )}
 
           {
             resultsQty >= loadMoreItemsQty ?
