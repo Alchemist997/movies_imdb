@@ -3,7 +3,7 @@ import urlGenerator from './../../utils/urlGenerator';
 import InputHeader from './../ui/inputs/InputHeader';
 import CardsList from './../ui/lists/CardsList';
 import { useState, useEffect, useCallback } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { debounce } from './../../utils/debounce';
 import SlickSlider from './../ui/slick_slider/SlickSlider';
@@ -25,12 +25,19 @@ function MoviePage() {
 
   const loadMoreItemsQty = 7;
   const searchUrl = urlGenerator('AdvancedSearch');
+  const redirect = useNavigate();
 
   function onLoadPageRequest(url) {
     axios.get(url)
       .then(response => {
         const responseData = response?.data;
         const imagesList = responseData?.images?.items;
+        const errorMessage = responseData?.errorMessage;
+
+        if (!responseData || errorMessage) {
+          throw new Error(errorMessage || 'Unknown Error');
+        }
+
         setImages(imagesList);
         if (imagesList?.length === 1) {
           setSuitableImages(prev => prev.add(imagesList[0].image));
@@ -41,9 +48,13 @@ function MoviePage() {
         setPageData(responseData);
       })
       .catch(error => {
-        // Добавить переход на 404
+        const response = error.response;
+        redirect(`/errorPage?statusCode=${response?.status ??
+          ''}&statusInfo=${response?.statusText ??
+          ''}&errorInfo=${error.message}`);
       })
       .finally(() => {
+        window.scrollTo(0, 0);
       });
   }
 
@@ -58,9 +69,9 @@ function MoviePage() {
 
         if (!results || errorMessage) {
           throw new Error(errorMessage || 'Unknown Error');
-        } else {
-          setCardsListData(results);
         }
+
+        setCardsListData(results);
       })
       .catch(error => {
         setCardsListData('error');
