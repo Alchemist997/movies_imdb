@@ -7,6 +7,7 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import { debounce } from './../../utils/debounce';
 import SlickSlider from './../ui/slick_slider/SlickSlider';
+import SVG from './../ui/svg/SVGList';
 
 function MoviePage() {
   const { movieID } = useParams();
@@ -158,7 +159,7 @@ function MoviePage() {
       <header className='header--moviePage'>
         <div className='container'>
           <Link to='/' className='header__logo'>
-            Magic Shows
+            <SVG name='logo-header' />
           </Link>
 
           <div className={`header__searchArea ${inputIsAtive ? 'active' : ''}`}>
