@@ -1,8 +1,11 @@
 import SVG from './../svg/SVGList';
 import Card from './../cards/Card';
 import CardError from './../cards/CardError';
+import { Link } from 'react-router-dom';
 
-function CardsList({ data, isLoading, makeRequest, resultsQty, loadMoreItemsQty, responseErrorInfo, isHeaderMode }) {
+function CardsList({ data, isLoading, makeRequest,
+  resultsQty, loadMoreItemsQty, responseErrorInfo,
+  isHeaderMode, requestString }) {
   return (
     <section className={`cards-list cards-list${isHeaderMode ? '--movie' : '--main'}`}>
       {data && data.length && data !== 'error'
@@ -38,12 +41,11 @@ function CardsList({ data, isLoading, makeRequest, resultsQty, loadMoreItemsQty,
                   Load more
                 </button>
 
-                : <button
-                  type='button'
+                : <Link to={`/?searchValue=${requestString}`}
                   className={`card card--loadMore`}
                 >
                   SHOW MORE RESULTS ON MAIN PAGE
-                </button>
+                </Link>
 
               : null
           }

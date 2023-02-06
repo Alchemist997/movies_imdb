@@ -23,11 +23,16 @@ function MoviePage() {
   const [showedImage, setShowedImage] = useState(-1);
   const [similarsData, setSimilarsData] = useState(null);
 
-  const loadMoreItemsQty = 7;
+  const loadMoreItemsQty = 20;
   const searchUrl = urlGenerator('AdvancedSearch');
   const redirect = useNavigate();
 
   function onLoadPageRequest(url) {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+
     axios.get(url)
       .then(response => {
         const responseData = response?.data;
@@ -52,9 +57,6 @@ function MoviePage() {
         redirect(`/errorPage?statusCode=${response?.status ??
           ''}&statusInfo=${response?.statusText ??
           ''}&errorInfo=${error.message}`);
-      })
-      .finally(() => {
-        window.scrollTo(0, 0);
       });
   }
 
@@ -187,6 +189,7 @@ function MoviePage() {
               loadMoreItemsQty={loadMoreItemsQty}
               responseErrorInfo={responseErrorInfo}
               isHeaderMode={true}
+              requestString={requestString}
             />
           </div>
 

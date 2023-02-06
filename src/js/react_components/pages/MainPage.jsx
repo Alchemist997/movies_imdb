@@ -1,23 +1,25 @@
 import axios from 'axios';
 import urlGenerator from './../../utils/urlGenerator';
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { throttleOnce } from '../../utils/debounce';
 import BackgroundMovie from './../ui/BackgroundMovie';
 import InputMain from './../ui/inputs/InputMain';
 import CardsList from './../ui/lists/CardsList';
 
 function MainPage() {
+  const searchValue = useSearchParams()[0].get('searchValue');
   const [aspectRatio, setAspectRatio] = useState(0);
   const [data, setData] = useState(null);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(searchValue || '');
   const [isLoading, setIsLoading] = useState(false);
-  const [requestString, setRequestString] = useState('');
+  const [requestString, setRequestString] = useSearchParams();
   const [resultsQty, setResultsQty] = useState(0);
   const [responseErrorInfo, setResponseErrorInfo] = useState('');
   const [cahchedRequestValue, setCahchedRequestValue] = useState(null);
   const [startNumber, setStartNumber] = useState(1);
 
-  const loadMoreItemsQty = 5;
+  const loadMoreItemsQty = 30;
   const searchUrl = urlGenerator('AdvancedSearch');
 
   function makeRequest(url) {
@@ -52,17 +54,21 @@ function MainPage() {
 
   const getIMDbData = useCallback(throttleOnce(requestString => {
     if (!requestString) return;
-    setRequestString(requestString);
+    setRequestString({ searchValue: requestString });
     setStartNumber(1);
     makeRequest(searchUrl({ requestString, loadMoreItemsQty }));
   }, 1000), []);
+
+  useEffect(() => {
+    if (!inputValue) return;
+    getIMDbData(inputValue);
+  }, []);
 
   useEffect(() => {
     function updateSize() {
       const width = document.documentElement.clientWidth;
       const height = document.documentElement.clientHeight;
       setAspectRatio(width > 1023 ? (width / height) : 0);
-      // if (width > 1023) setAR(width / height);
     }
 
     window.addEventListener('resize', updateSize);
@@ -99,7 +105,7 @@ function MainPage() {
               data={data}
               isLoading={isLoading}
               makeRequest={() => makeRequest(searchUrl({
-                requestString,
+                requestString: requestString.get('searchValue'),
                 loadMoreItemsQty,
                 startNumber
               }))}

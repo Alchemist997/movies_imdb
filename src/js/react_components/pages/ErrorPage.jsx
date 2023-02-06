@@ -2,7 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import SVG from './../ui/svg/SVGList';
 
 function ErrorPage() {
-  const [params] = useSearchParams();
+  const params = useSearchParams()[0];
   const searchParams = {};
 
   for (const param of params.entries()) {
