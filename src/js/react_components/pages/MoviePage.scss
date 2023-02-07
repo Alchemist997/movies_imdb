@@ -11,6 +11,7 @@
   }
 
   &__logo {
+    margin-right: 30px;
     background-color: rgba(#fff, 0.15);
     border-radius: 20px;
     @extend %flex-center;
@@ -122,6 +123,7 @@
   &__img {
     z-index: -3;
     width: 100%;
+    height: 100%;
     max-height: 100%;
     object-fit: cover;
     object-position: center;
@@ -162,6 +164,8 @@
   &__info {
     max-width: 70%;
     justify-content: space-evenly;
+    padding-top: 30px;
+    padding-bottom: 30px;
 
     .imdb-rate {
       margin-right: 24px;
@@ -290,10 +294,86 @@
     &__images-wrap.once img {
       max-height: 120vh;
       object-fit: contain;
+      height: auto;
     }
 
     &__img {
       max-height: 150vh;
+      height: auto;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .movie-preview {
+    &__title {
+      font-size: 48px;
+    }
+
+    &__btn {
+      padding: 15px 50px;
+
+      &:focus::after {
+        left: 110%;
+        top: -30%;
+      }
+    }
+
+    &__info {
+      &-top {
+        font-size: 1rem;
+      }
+
+      .movie-info-description {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 30px;
+
+        .imdb-rate {
+          margin-bottom: 1rem;
+        }
+
+        p + p {
+          border: none;
+          padding-left: 0;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .movie-info {
+    font-size: 16px;
+
+    h2 {
+      font-size: 28px;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .movie-info__description,
+  .movie-preview__info {
+    max-width: none;
+  }
+
+  .movie-preview {
+    &__title {
+      font-size: 28px;
+    }
+  }
+
+  .movie-info {
+    font-size: 14px;
+
+    h2 {
+      font-size: 18px;
+    }
+  }
+}
+
+@media (max-width: 639px) {
+  .header__searchArea {
+    display: none;
   }
 }

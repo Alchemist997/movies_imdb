@@ -91,3 +91,30 @@
     background-repeat: no-repeat;
   }
 }
+
+@media (max-width: 1024px) {
+  .main {
+    h1 {
+      font-size: 5.5vw;
+    }
+    & > p {
+      font-size: 3.2vw;
+
+      &.active {
+        margin-bottom: 35px;
+      }
+    }
+  }
+}
+
+@media (min-width: 1921px) {
+  .main {
+    h1 {
+      font-size: 85px;
+    }
+
+    & > p {
+      font-size: 48px;
+    }
+  }
+}

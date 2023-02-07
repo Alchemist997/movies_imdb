@@ -7,7 +7,7 @@
   justify-content: space-between;
   align-items: flex-start;
   text-align: left;
-  font-size: 0.97vw;
+  font-size: 14px;
   transition: background-color 0.2s;
 
   &:hover {
@@ -17,7 +17,7 @@
   &--empty {
     background-color: lighten($card-color, 5);
     justify-content: center;
-    font-size: 2.2vw;
+    font-size: 28px;
     font-weight: 700;
   }
 
@@ -27,7 +27,7 @@
     padding: 15px 15%;
     background-color: $accent;
     transition: background-color 0.2s, color $transition_btnMain, transform 0.1s;
-    font-size: 2vw;
+    font-size: 28px;
     font-weight: 700;
 
     &:hover {
@@ -123,7 +123,7 @@
 
       p {
         margin-right: 20px;
-        font-size: 1.6vw;
+        font-size: 24px;
         font-weight: 700;
       }
     }
@@ -131,6 +131,59 @@
     &-bottom {
       border-top: 1px solid rgba(#fff, 0.05);
       padding-top: 15px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .cards-list--movie {
+    .card {
+      &:not(.card--loadMore):not(.card--empty) {
+        font-size: 12px;
+      }
+
+      &__img-wrap {
+        max-width: 30%;
+      }
+
+      &__info-top {
+        flex-direction: column;
+
+        p {
+          font-size: 3.3vw;
+          margin-bottom: 0.8em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 639px) {
+  .card {
+    &:not(.card--loadMore):not(.card--empty) {
+      font-size: 12px;
+    }
+
+    &__img-wrap {
+      max-width: 30%;
+    }
+
+    &__info-top {
+      flex-direction: column;
+
+      p {
+        font-size: 3.3vw;
+        margin-bottom: 0.8em;
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .card {
+    &__info-top p {
+      font-size: 4.5vw;
+      margin-bottom: 0.8em;
     }
   }
 }

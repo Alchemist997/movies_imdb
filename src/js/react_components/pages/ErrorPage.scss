@@ -26,3 +26,15 @@
     padding: 20px;
   }
 }
+
+@media (max-width: 639px) {
+  .errorPage {
+    font-size: 4.2vw;
+    padding-left: 20px;
+    padding-right: 20px;
+
+    h1 {
+      font-size: 10vw;
+    }
+  }
+}

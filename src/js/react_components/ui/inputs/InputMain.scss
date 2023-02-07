@@ -42,11 +42,35 @@
     }
 
     svg {
+      width: 100%;
       position: absolute;
       top: 0;
       left: 0;
       opacity: 0;
       transition: opacity $transition_btnMain;
+    }
+  }
+}
+
+@media (max-width: 639px) {
+  .inputMain {
+    border-radius: 30px;
+    margin-bottom: 15px;
+    padding: 15px;
+    padding-left: 28px;
+
+    &-submitBtn {
+      border-radius: 30px;
+      padding: 15px;
+    }
+
+    &-wrap {
+      height: auto;
+      flex-direction: column;
+    }
+
+    &-submitBtn {
+      flex-basis: auto;
     }
   }
 }
