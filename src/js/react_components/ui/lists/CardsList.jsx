@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 function CardsList({ data, isLoading, makeRequest,
   resultsQty, loadMoreItemsQty, responseErrorInfo,
   isHeaderMode, requestString }) {
+
   return (
     <section className={`cards-list cards-list${isHeaderMode ? '--movie' : '--main'}`}>
       {data && data.length && data !== 'error'

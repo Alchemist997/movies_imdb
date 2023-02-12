@@ -111,25 +111,17 @@ function MoviePage() {
   }, [movieID]);
 
   useEffect(() => {
-    const input = document.querySelector('.inputHeader');
-
-    function inputHandler() {
-      setInputIsAtive(true);
-    }
-
     function searchAreaHandler(evt) {
       const target = evt.target;
       if (target.closest('.header__searchArea') && !target.closest('.card')) return;
+
       setInputIsAtive(false);
     }
 
-    input.addEventListener('focus', inputHandler);
-    document.addEventListener('pointerdown', searchAreaHandler);
-    return () => {
-      input.removeEventListener('focus', inputHandler);
-      document.removeEventListener('pointerdown', searchAreaHandler);
-    };
-  });
+    document.body.addEventListener('click', searchAreaHandler);
+
+    return () => { document.body.removeEventListener('click', searchAreaHandler); };
+  }, []);
 
   useEffect(() => {
     if (!images || !images.length) return;
@@ -178,6 +170,7 @@ function MoviePage() {
           <div className={`header__searchArea ${inputIsAtive ? 'active' : ''}`}>
             <InputHeader
               handler={inputOnChangeHandler}
+              onFocusHandler={() => setInputIsAtive(true)}
               value={inputValue}
               isLoading={isLoading}
             />

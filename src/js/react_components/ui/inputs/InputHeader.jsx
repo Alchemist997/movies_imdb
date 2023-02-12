@@ -1,6 +1,6 @@
 import SVG from '../svg/SVGList';
 
-function InputHeader({ handler, value, isLoading }) {
+function InputHeader({ handler, value, isLoading, onFocusHandler }) {
   return (
     <label className='inputHeader-wrap'>
       <div className={`inputHeader__svg-wrap ${isLoading ? 'isLoading' : ''}`}>
@@ -12,10 +12,8 @@ function InputHeader({ handler, value, isLoading }) {
         type='text'
         value={value}
         maxLength='128'
-        onChange={evt => {
-          // if (isLoading) return;
-          handler(evt.target.value);
-        }}
+        onChange={evt => handler(evt.target.value)}
+        onFocus={() => onFocusHandler()}
       />
     </label>
   );
