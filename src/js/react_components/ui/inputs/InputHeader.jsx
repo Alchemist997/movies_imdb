@@ -8,7 +8,7 @@ function InputHeader({ handler, value, isLoading, onFocusHandler }) {
         <SVG name='loader_2' />
       </div>
       <input className='inputHeader'
-        placeholder='Type here...'
+        placeholder='Type here... (English)'
         type='text'
         value={value}
         maxLength='128'

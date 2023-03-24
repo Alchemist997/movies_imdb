@@ -4,7 +4,7 @@ function InputMain({ handler, value, isLoading }) {
   return (
     <div className='inputMain-wrap'>
       <input className='inputMain'
-        placeholder='Type here...'
+        placeholder='Type here... (English)'
         type='text'
         value={value}
         maxLength='128'

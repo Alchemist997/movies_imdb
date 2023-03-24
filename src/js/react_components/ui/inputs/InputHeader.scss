@@ -56,7 +56,7 @@ $background-inputHeader: #1b1919;
       height: 100%;
       transition: opacity 0.2s;
 
-      &#loader_2 {
+      &.loader_2 {
         transform: scale(1.2);
         * {
           fill: $text-inputHeader;

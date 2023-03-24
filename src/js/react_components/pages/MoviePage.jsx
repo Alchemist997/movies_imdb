@@ -19,6 +19,7 @@ function MoviePage() {
   const [responseErrorInfo, setResponseErrorInfo] = useState('');
   const [pageData, setPageData] = useState(null);
   const [images, setImages] = useState(null);
+  const [loadedImages, setLoadedImages] = useState(0);
   const [suitableImages, setSuitableImages] = useState(new Set());
   const [showedImage, setShowedImage] = useState(-1);
   const [similarsData, setSimilarsData] = useState(null);
@@ -28,11 +29,6 @@ function MoviePage() {
   const redirect = useNavigate();
 
   function onLoadPageRequest(url) {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-
     axios.get(url)
       .then(response => {
         const responseData = response?.data;
@@ -51,6 +47,11 @@ function MoviePage() {
         responseData.images = null;
         responseData.similars = null;
         setPageData(responseData);
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
       })
       .catch(error => {
         const response = error.response;
@@ -91,6 +92,15 @@ function MoviePage() {
       });
   }
 
+  function onImgLoadHandler() {
+    setLoadedImages(prev => {
+      if (prev + 1 >= images.length && !suitableImages.size) {
+        setSuitableImages(prev => prev.add(images[0].image));
+      }
+      return ++prev;
+    });
+  }
+
   const debounceInputHandler = useCallback(debounce(value => {
     if (!value || value === requestString || isLoading) return;
     setRequestString(value);
@@ -106,6 +116,7 @@ function MoviePage() {
     setSuitableImages(new Set());
     setSimilarsData(null);
     setPageData(null);
+    setLoadedImages(0);
     const onLoadPage = urlGenerator('Title');
     onLoadPageRequest(onLoadPage({ movieID }));
   }, [movieID]);
@@ -193,7 +204,7 @@ function MoviePage() {
 
         <div className={`movie-preview__images-wrap
         ${!suitableImages.size ? 'hidden' : ''}
-        ${images?.length === 1 ? 'once' : ''}`}>
+        ${images?.length === 1 || (suitableImages.size === 1 && loadedImages >= images?.length) ? 'once' : ''}`}>
           {images &&
             <>
               {images.map((el, i) => {
@@ -201,7 +212,9 @@ function MoviePage() {
                   key={el.image}
                   alt={el.title}
                   src={el.image}
+                  onError={onImgLoadHandler}
                   onLoad={evt => {
+                    onImgLoadHandler();
                     const img = evt.target;
                     const imgAspectRatio = img.naturalWidth / img.naturalHeight;
                     const viewportWidth = document.documentElement.clientWidth;
@@ -214,7 +227,10 @@ function MoviePage() {
             </>
           }
 
-          {!suitableImages.size && <div className='backgroundCSSImage' />}
+          {!suitableImages.size &&
+            <div className='backgroundCSSImage'>
+              {images?.length || !pageData ? <SVG name='loader_2' /> : null}
+            </div>}
           <div className='movie-preview__gradient' />
         </div>
 

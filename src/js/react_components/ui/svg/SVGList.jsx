@@ -34,7 +34,7 @@ function SVG({ name }) {
 
         case 'loader_2':
             return (
-                <svg id="loader_2"
+                <svg className="loader_2"
                     xmlns="http://www.w3.org/2000/svg"
                     width="200px"
                     height="200px"
