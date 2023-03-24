@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/movies_imdb/static/css/main.a4de0f4e.css",
-    "main.js": "/movies_imdb/static/js/main.83eaafe7.js",
+    "main.css": "/movies_imdb/static/css/main.2254d5e4.css",
+    "main.js": "/movies_imdb/static/js/main.478181c1.js",
     "static/media/background_image_main.jpg": "/movies_imdb/static/media/background_image_main.06e31c52907e6f5acef3.jpg",
     "static/media/slick.svg": "/movies_imdb/static/media/slick.2630a3e3eab21c607e21.svg",
     "static/media/slick.eot": "/movies_imdb/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/movies_imdb/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/movies_imdb/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/movies_imdb/index.html",
-    "main.a4de0f4e.css.map": "/movies_imdb/static/css/main.a4de0f4e.css.map",
-    "main.83eaafe7.js.map": "/movies_imdb/static/js/main.83eaafe7.js.map"
+    "main.2254d5e4.css.map": "/movies_imdb/static/css/main.2254d5e4.css.map",
+    "main.478181c1.js.map": "/movies_imdb/static/js/main.478181c1.js.map"
   },
   "entrypoints": [
-    "static/css/main.a4de0f4e.css",
-    "static/js/main.83eaafe7.js"
+    "static/css/main.2254d5e4.css",
+    "static/js/main.478181c1.js"
   ]
 }
